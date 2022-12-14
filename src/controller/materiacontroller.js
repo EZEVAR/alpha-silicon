@@ -2,24 +2,24 @@ require("rootpath")();
 const express = require('express');
 const app = express();
 
-const personaDb = require("../datasource/personasDB.js");
+const materiaDb = require("../datasource/materiasDB.js");
 
 
 app.get('/', getAll);
 
-app.get('/:dni', getByDni);
+app.get('/:idmateria', getByidmateria);
 
 app.post('/', create);
 
-app.put('/:dni', update);
+app.put('/:idmateria', update);
 
-app.delete('/del/:dni', eliminar);
+app.delete('/del/:idmateria', eliminar);
 
-app.delete('/:idpersona', eliminacionlogica);
+app.delete('/:idmateria', eliminacionlogica);
 
-// Metododo para listar todas las personas 
+// Metododo para listar todos los materias 
 function getAll(req, res) {
-    personaDb.getAll(function (err, result) {
+    materiaDb.getAll(function (err, result) {
         if (err) {
             res.status(500).send(err);
         } else {
@@ -27,9 +27,9 @@ function getAll(req, res) {
         }
     });
 }
-// Metodo para buscar personas por su dni
-function getByDni(req, res) {
-    personaDb.getByDni(req.params.dni,function (err, result) {
+// Metodo para buscar materias por su id
+function getByidmateria(req, res) {
+    materiasDb.getByidmateria(req.params.idmateria,function (err, result) {
         if (err) {
             res.status(500).send(err);
         } else {
@@ -37,9 +37,9 @@ function getByDni(req, res) {
         }
     });
 }
-// Metodo para agregar personaas
+// Metodo para agregar materias
 function create(req, res) {
-    personaDb.create(req.body, function (err, result) {
+    materiaDb.create(req.body, function (err, result) {
         if (err) {
             res.status(500).send(err);
         } else {
@@ -47,9 +47,9 @@ function create(req, res) {
         }
     });
 }
-// Metodo para modificar personaas
+// Metodo para modificar materias
 function update(req, res) {
-    personaDb.update(req.params.dni, req.body, function (result) {
+    materiaDb.update(req.params.idmateria, req.body, function (result) {
         if (result.code == 3) {
             res.status(500).send(err);
         } else if (result.code == 2) {
@@ -59,9 +59,9 @@ function update(req, res) {
         }
     });
 }
-// Metodo par eliminar fisicmente personas de la base de datos
+// Metodo par eliminar fisicmente materias de la base de datos
 function eliminar(req, res) {
-    personaDb.delete(req.params.dni,  function (err, result) {
+    materiaDb.delete(req.params.idmateria,  function (err, result) {
         if (err) {
             res.status(500).send(err);
         } else {
@@ -73,9 +73,9 @@ function eliminar(req, res) {
         }
     });
 }
-// Metodo par eliminar personas cambiando el estado a 0
+// Metodo par eliminar materias cambiando el estado a 0
 function eliminacionlogica(req, res) {
-    personaDb.logdelete(req.params.idpersona, function (result) {
+    materiaDb.logdelete(req.params.idmateria, function (result) {
         if (result.code == 3) {
             res.status(500).send(err);
         } else if (result.code == 2) {

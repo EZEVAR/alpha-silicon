@@ -2,24 +2,24 @@ require("rootpath")();
 const express = require('express');
 const app = express();
 
-const personaDb = require("../datasource/personasDB.js");
+const cursoDb = require("../datasource/cursosDB.js");
 
 
 app.get('/', getAll);
 
-app.get('/:dni', getByDni);
+app.get('/:idcurso', getByidcurso);
 
 app.post('/', create);
 
-app.put('/:dni', update);
+app.put('/:idcurso', update);
 
-app.delete('/del/:dni', eliminar);
+app.delete('/del/:idcurso', eliminar);
 
-app.delete('/:idpersona', eliminacionlogica);
+app.delete('/:idcurso', eliminacionlogica);
 
-// Metododo para listar todas las personas 
+// Metododo para listar todos los cursos 
 function getAll(req, res) {
-    personaDb.getAll(function (err, result) {
+    cursoDb.getAll(function (err, result) {
         if (err) {
             res.status(500).send(err);
         } else {
@@ -27,9 +27,9 @@ function getAll(req, res) {
         }
     });
 }
-// Metodo para buscar personas por su dni
-function getByDni(req, res) {
-    personaDb.getByDni(req.params.dni,function (err, result) {
+// Metodo para buscar cursos por su id
+function getByidcurso(req, res) {
+    cursosDb.getByidcurso(req.params.idcurso,function (err, result) {
         if (err) {
             res.status(500).send(err);
         } else {
@@ -37,9 +37,9 @@ function getByDni(req, res) {
         }
     });
 }
-// Metodo para agregar personaas
+// Metodo para agregar cursos
 function create(req, res) {
-    personaDb.create(req.body, function (err, result) {
+    cursoDb.create(req.body, function (err, result) {
         if (err) {
             res.status(500).send(err);
         } else {
@@ -47,9 +47,9 @@ function create(req, res) {
         }
     });
 }
-// Metodo para modificar personaas
+// Metodo para modificar cursos
 function update(req, res) {
-    personaDb.update(req.params.dni, req.body, function (result) {
+    cursoDb.update(req.params.idcurso, req.body, function (result) {
         if (result.code == 3) {
             res.status(500).send(err);
         } else if (result.code == 2) {
@@ -59,9 +59,9 @@ function update(req, res) {
         }
     });
 }
-// Metodo par eliminar fisicmente personas de la base de datos
+// Metodo par eliminar fisicmente cursos de la base de datos
 function eliminar(req, res) {
-    personaDb.delete(req.params.dni,  function (err, result) {
+    cursoDb.delete(req.params.idcurso,  function (err, result) {
         if (err) {
             res.status(500).send(err);
         } else {
@@ -73,9 +73,9 @@ function eliminar(req, res) {
         }
     });
 }
-// Metodo par eliminar personas cambiando el estado a 0
+// Metodo par eliminar cursos cambiando el estado a 0
 function eliminacionlogica(req, res) {
-    personaDb.logdelete(req.params.idpersona, function (result) {
+    cursoDb.logdelete(req.params.idcurso, function (result) {
         if (result.code == 3) {
             res.status(500).send(err);
         } else if (result.code == 2) {

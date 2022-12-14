@@ -2,24 +2,24 @@ require("rootpath")();
 const express = require('express');
 const app = express();
 
-const personaDb = require("../datasource/personasDB.js");
+const usuarioDb = require("../datasource/usuariosDB.js");
 
 
 app.get('/', getAll);
 
-app.get('/:dni', getByDni);
+app.get('/:idusuario', getByidusuario);
 
 app.post('/', create);
 
-app.put('/:dni', update);
+app.put('/:idusuario', update);
 
-app.delete('/del/:dni', eliminar);
+app.delete('/del/:idusuario', eliminar);
 
-app.delete('/:idpersona', eliminacionlogica);
+app.delete('/:idusuario', eliminacionlogica);
 
-// Metododo para listar todas las personas 
+// Metododo para listar todas las usuarios 
 function getAll(req, res) {
-    personaDb.getAll(function (err, result) {
+    usuarioDb.getAll(function (err, result) {
         if (err) {
             res.status(500).send(err);
         } else {
@@ -27,9 +27,9 @@ function getAll(req, res) {
         }
     });
 }
-// Metodo para buscar personas por su dni
-function getByDni(req, res) {
-    personaDb.getByDni(req.params.dni,function (err, result) {
+// Metodo para buscar usuarios por su idusuario
+function getByidusuario(req, res) {
+    usuarioDb.getByidusuario(req.params.idusuario,function (err, result) {
         if (err) {
             res.status(500).send(err);
         } else {
@@ -37,9 +37,9 @@ function getByDni(req, res) {
         }
     });
 }
-// Metodo para agregar personaas
+// Metodo para agregar usuarios
 function create(req, res) {
-    personaDb.create(req.body, function (err, result) {
+    usuarioDb.create(req.body, function (err, result) {
         if (err) {
             res.status(500).send(err);
         } else {
@@ -47,9 +47,9 @@ function create(req, res) {
         }
     });
 }
-// Metodo para modificar personaas
+// Metodo para modificar usuarios
 function update(req, res) {
-    personaDb.update(req.params.dni, req.body, function (result) {
+    usuarioDb.update(req.params.idusuario, req.body, function (result) {
         if (result.code == 3) {
             res.status(500).send(err);
         } else if (result.code == 2) {
@@ -59,9 +59,9 @@ function update(req, res) {
         }
     });
 }
-// Metodo par eliminar fisicmente personas de la base de datos
+// Metodo par eliminar fisicamente usuarios de la base de datos
 function eliminar(req, res) {
-    personaDb.delete(req.params.dni,  function (err, result) {
+    usuarioDb.delete(req.params.idusuario,  function (err, result) {
         if (err) {
             res.status(500).send(err);
         } else {
@@ -73,9 +73,9 @@ function eliminar(req, res) {
         }
     });
 }
-// Metodo par eliminar personas cambiando el estado a 0
+// Metodo par eliminar usuarios cambiando el estado a 0
 function eliminacionlogica(req, res) {
-    personaDb.logdelete(req.params.idpersona, function (result) {
+    usuarioDb.logdelete(req.params.idusuario, function (result) {
         if (result.code == 3) {
             res.status(500).send(err);
         } else if (result.code == 2) {
