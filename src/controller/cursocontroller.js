@@ -1,9 +1,7 @@
 require("rootpath")();
 const express = require('express');
 const app = express();
-
 const cursoDb = require("../datasource/cursosDB.js");
-
 
 app.get('/', getAll);
 
@@ -37,7 +35,7 @@ function getByidcurso(req, res) {
         }
     });
 }
-// Metodo para agregar cursos
+// Metodo para agregar cursos.
 function create(req, res) {
     cursoDb.create(req.body, function (err, result) {
         if (err) {
@@ -85,5 +83,4 @@ function eliminacionlogica(req, res) {
         }
     });
 }
-
 module.exports = app;

@@ -1,9 +1,7 @@
 require("rootpath")();
 const express = require('express');
 const app = express();
-
 const materiaDb = require("../datasource/materiasDB.js");
-
 
 app.get('/', getAll);
 
