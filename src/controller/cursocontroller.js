@@ -27,7 +27,7 @@ function getAll(req, res) {
 }
 // Metodo para buscar cursos por su id
 function getByidcurso(req, res) {
-    cursosDb.getByidcurso(req.params.idcurso,function (err, result) {
+    cursoDb.getByidcurso(req.params.idcurso,function (err, result) {
         if (err) {
             res.status(500).send(err);
         } else {
